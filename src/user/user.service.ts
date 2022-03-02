@@ -6,7 +6,7 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
     createUserDto.password = bcrypt.hashSync(createUserDto.password, 10);
@@ -53,7 +53,10 @@ export class UserService {
       updateUserDto.password = bcrypt.hashSync(updateUserDto.password, 10);
     }
 
-    const user = await this.prisma.users.update({ where: { id }, data: { ...updateUserDto } })
+    const user = await this.prisma.users.update({
+      where: { id },
+      data: { ...updateUserDto },
+    });
 
     delete user.password;
 
