@@ -18,15 +18,17 @@ export class BreadService {
   }
 
   async findOne(id: number) {
-    return this.prisma.breads.findUnique({ where: { id } });
-  }
-
-  async update(id: number, updateBreadDto: UpdateBreadDto) {
-    const bread = await this.findOne(id);
+    const bread = await this.prisma.breads.findUnique({ where: { id } });
 
     if (bread === null) {
       throw new BadRequestException('Bread not found');
     }
+
+    return bread;
+  }
+
+  async update(id: number, updateBreadDto: UpdateBreadDto) {
+    const bread = await this.findOne(id);
 
     return this.prisma.breads.update({
       data: { ...bread, ...updateBreadDto },
@@ -35,11 +37,7 @@ export class BreadService {
   }
 
   async remove(id: number) {
-    const bread = await this.findOne(id);
-
-    if (bread === null) {
-      throw new BadRequestException('Bread not found');
-    }
+    await this.findOne(id);
 
     return this.prisma.breads.delete({ where: { id } });
   }
