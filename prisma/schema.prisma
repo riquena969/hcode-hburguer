@@ -28,6 +28,66 @@ model users {
   zipcode    String?         @db.VarChar(120)
   createdAt  DateTime        @default(now()) @db.DateTime(0)
   updatedAt  DateTime        @default(now()) @db.DateTime(0)
+  orders     orders[]
+}
+
+model breads {
+  id        Int        @id @default(autoincrement())
+  name      String     @db.VarChar(120)
+  value     Decimal    @db.Decimal(8, 2)
+  createdAt DateTime   @default(now()) @db.DateTime(0)
+  updatedAt DateTime   @default(now()) @db.DateTime(0)
+  products  products[]
+}
+
+model itens {
+  id            Int             @id @default(autoincrement())
+  name          String          @db.VarChar(120)
+  value         Decimal         @db.Decimal(8, 2)
+  createdAt     DateTime        @default(now()) @db.DateTime(0)
+  updatedAt     DateTime        @default(now()) @db.DateTime(0)
+  product_itens product_itens[]
+}
+
+model orders {
+  id        Int        @id @default(autoincrement())
+  user_id   Int
+  value     Decimal    @db.Decimal(8, 2)
+  createdAt DateTime   @default(now()) @db.DateTime(0)
+  updatedAt DateTime   @default(now()) @db.DateTime(0)
+  users     users      @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "FK_orders_users")
+  products  products[]
+
+  @@index([user_id], map: "FK_orders_users")
+}
+
+model product_itens {
+  id         Int      @id @default(autoincrement())
+  product_id Int
+  item_id    Int
+  value      Decimal  @db.Decimal(8, 2)
+  createdAt  DateTime @default(now()) @db.DateTime(0)
+  updatedAt  DateTime @default(now()) @db.DateTime(0)
+  itens      itens    @relation(fields: [item_id], references: [id], onDelete: Cascade, map: "FK_product_itens_itens")
+  products   products @relation(fields: [product_id], references: [id], onDelete: Cascade, map: "FK_product_itens_products")
+
+  @@index([item_id], map: "FK_product_itens_itens")
+  @@index([product_id], map: "FK_product_itens_products")
+}
+
+model products {
+  id            Int             @id @default(autoincrement())
+  value         Decimal         @db.Decimal(8, 2)
+  order_id      Int
+  bread_id      Int
+  createdAt     DateTime        @default(now()) @db.DateTime(0)
+  updatedAt     DateTime        @default(now()) @db.DateTime(0)
+  breads        breads          @relation(fields: [bread_id], references: [id], onUpdate: Restrict, map: "FK_breads_products")
+  orders        orders          @relation(fields: [order_id], references: [id], onUpdate: Restrict, map: "FK_orders_products")
+  product_itens product_itens[]
+
+  @@index([bread_id], map: "FK_breads_products")
+  @@index([order_id], map: "FK_orders_products")
 }
 
 enum users_user_type {
