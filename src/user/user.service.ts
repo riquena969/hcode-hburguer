@@ -13,7 +13,7 @@ export class UserService {
     createUserDto.password = bcrypt.hashSync(createUserDto.password, 10);
 
     const userCreated = await this.prisma.users.create({
-      data: { ...createUserDto, user_type: createUserDto.userType },
+      data: { ...createUserDto },
     });
 
     delete userCreated.password;

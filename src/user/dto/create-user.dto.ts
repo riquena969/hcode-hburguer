@@ -40,5 +40,5 @@ export class CreateUserDto {
   zipcode?: string;
 
   @ApiProperty()
-  userType?: users_user_type;
+  user_type?: users_user_type;
 }

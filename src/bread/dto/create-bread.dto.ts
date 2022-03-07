@@ -9,6 +9,5 @@ export class CreateBreadDto {
 
   @ApiProperty()
   @IsPositive()
-  @IsNumber()
   value: number;
 }
