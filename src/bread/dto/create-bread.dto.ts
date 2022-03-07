@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsPositive, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
 
 export class CreateBreadDto {
   @ApiProperty()
@@ -9,5 +9,6 @@ export class CreateBreadDto {
 
   @ApiProperty()
   @IsPositive()
+  @IsNumber()
   value: number;
 }

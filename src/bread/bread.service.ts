@@ -9,7 +9,10 @@ export class BreadService {
 
   async create(createBreadDto: CreateBreadDto) {
     return this.prisma.breads.create({
-      data: { ...createBreadDto },
+      data: { 
+        name: createBreadDto.name,
+        value: Number(createBreadDto.value),
+       },
     });
   }
 

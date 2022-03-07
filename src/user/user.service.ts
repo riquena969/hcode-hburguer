@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
+import { validId } from 'functions/validId';
 
 @Injectable()
 export class UserService {
@@ -41,7 +42,12 @@ export class UserService {
   }
 
   async findOne(id: number) {
+    id = validId(id);
     const user = await this.prisma.users.findUnique({ where: { id } });
+
+    if(!user){
+      throw new BadRequestException('User not found');
+    }
 
     delete user.password;
 
@@ -59,6 +65,9 @@ export class UserService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
+
+    id = validId(id);
+    await this.findOne(id);
     if (updateUserDto.password) {
       updateUserDto.password = bcrypt.hashSync(updateUserDto.password, 10);
     }
@@ -74,6 +83,10 @@ export class UserService {
   }
 
   async remove(id: number) {
+    id = validId(id);
+
+    await this.findOne(id);
+
     return this.prisma.users.delete({ where: { id } });
   }
 }
