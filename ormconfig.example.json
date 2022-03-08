@@ -3,7 +3,7 @@
     "host": "localhost",
     "port": 3306,
     "username": "root",
-    "password": "Lwl936089&",
+    "password": "",
     "database": "hburguer",
     "synchronize": true,
     "logging": false,
