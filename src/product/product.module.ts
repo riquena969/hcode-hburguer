@@ -8,5 +8,6 @@ import { BreadModule } from 'src/bread/bread.module';
   controllers: [ProductController],
   providers: [ProductService],
   imports: [PrismaModule, BreadModule],
+  exports: [ProductService]
 })
 export class ProductModule { }

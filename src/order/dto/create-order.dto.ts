@@ -1,13 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty } from "class-validator";
+import { IsArray, IsNotEmpty } from "class-validator";
+import { CreateOrderProductDto } from "./create-order-product.dto";
 
 export class CreateOrderDto {
     @ApiProperty()
     @IsNotEmpty()
-    userId: number;
-
-    @ApiProperty()
-    @IsNotEmpty()
-    value: number;
+    @IsArray()
+    products: CreateOrderProductDto[];
 }
- 

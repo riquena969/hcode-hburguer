@@ -7,6 +7,7 @@ import { BreadModule } from './bread/bread.module';
 import { ItemModule } from './item/item.module';
 import { OrderModule } from './order/order.module';
 import { ProductModule } from './product/product.module';
+import { ProductItemModule } from './product-item/product-item.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ProductModule } from './product/product.module';
     BreadModule,
     ItemModule,
     OrderModule,
+    ProductItemModule,
   ],
   controllers: [AppController],
   providers: [AppService],
