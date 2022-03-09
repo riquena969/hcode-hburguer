@@ -7,5 +7,6 @@ import { PrismaModule } from 'src/prisma/prisma.module';
   controllers: [BreadController],
   providers: [BreadService],
   imports: [PrismaModule],
+  exports: [BreadService]
 })
-export class BreadModule {}
+export class BreadModule { }
