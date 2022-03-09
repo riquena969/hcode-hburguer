@@ -1,4 +1,5 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { BreadService } from 'src/bread/bread.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -6,49 +7,33 @@ import { UpdateProductDto } from './dto/update-product.dto';
 @Injectable()
 export class ProductService {
 
-    constructor(private prisma: PrismaService) {}
+  constructor(private prismaService: PrismaService, private breadService: BreadService){}
 
-        async create(createProductDto: CreateProductDto) {
-            return this.prisma.create({
-              data: { 
-                name: createProductDto.name,
-                value: Number(createProductDto.value),
-               },
-            });
-          }
-        
-
-        async findAll() {
-            return this.prisma.products.findMany();
-          }
-        
-          async findOne(id: number) {
-            const product = await this.prisma.products.findUnique({ where: { id } });
-        
-            if (product === null) {
-              throw new BadRequestException('Bread not found');
-            }
-        
-            return product;
-          }
-    }
-
-    /*async update(id: number, updateProductDto: UpdateProductDto) {
-        const bread = await this.findOne(id);
-    
-        return this.prisma.products.update({
-          data: { ...product, ...updateProductDto },
-          where: { id },
-        });
+  create(createProductDto: CreateProductDto) {
+    const idBead = Number(createProductDto.order_id);
+    const bread = this.breadService.findOne(idBead);
+    return this.prismaService.products.create({
+      data:{
+        value: Number(createProductDto.value),
+        order_id: Number(createProductDto.order_id),
+        bread_id: Number(createProductDto.bread_id),
       }
-    
-      async remove(id: number) {
-        await this.findOne(id);
-    
-        return this.prisma.products.delete({ where: { id } });
-      }*/
-    
-function remove(id: any, number: any) {
-    throw new Error('Function not implemented.');
-}
+    })
+  }
 
+  findAll() {
+    return this.prismaService.products.findMany();
+  }
+
+  findOne(id: number) {
+    return `This action returns a #${id} product`;
+  }
+
+  update(id: number, updateProductDto: UpdateProductDto) {
+    return `This action updates a #${id} product`;
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} product`;
+  }
+}
