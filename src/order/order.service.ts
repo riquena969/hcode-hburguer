@@ -66,12 +66,23 @@ export class OrderService {
   }
 
   async findOne(id: number) {
-
     id = validId(id);
 
     const order = await this.prismaService.orders.findUnique({
       where: {
         id
+      },
+      include: {
+        products: {
+          include: {
+            breads: true,
+            product_itens: {
+              include: {
+                itens: true
+              }
+            }
+          }
+        }
       }
     });
 
