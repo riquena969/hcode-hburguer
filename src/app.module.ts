@@ -1,3 +1,4 @@
+import { PaymentModule } from './payment/payment.module';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -9,8 +10,10 @@ import { OrderModule } from './order/order.module';
 import { ProductModule } from './product/product.module';
 import { ProductItemModule } from './product-item/product-item.module';
 
+
 @Module({
   imports: [
+    PaymentModule,
     ProductModule,
     UserModule,
     AuthModule,
