@@ -1,12 +1,12 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsString } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsArray, IsString } from 'class-validator';
 
 export class CreateOrderProductDto {
-    @ApiProperty()
-    @IsString()
-    bread: string;
+  @ApiProperty()
+  @IsString()
+  bread: string;
 
-    @ApiProperty()
-    @IsArray()
-    itens: number[];
+  @ApiProperty()
+  @IsArray()
+  itens: number[];
 }

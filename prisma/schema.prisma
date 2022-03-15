@@ -82,8 +82,8 @@ model products {
   bread_id      Int
   createdAt     DateTime        @default(now()) @db.DateTime(0)
   updatedAt     DateTime        @default(now()) @db.DateTime(0)
-  breads        breads          @relation(fields: [bread_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_breads_products")
-  orders        orders          @relation(fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_orders_products")
+  breads        breads          @relation(fields: [bread_id], references: [id], onUpdate: Restrict, map: "FK_breads_products")
+  orders        orders          @relation(fields: [order_id], references: [id], onUpdate: Restrict, map: "FK_orders_products")
   product_itens product_itens[]
 
   @@index([bread_id], map: "FK_breads_products")

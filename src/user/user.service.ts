@@ -45,7 +45,7 @@ export class UserService {
     id = validId(id);
     const user = await this.prisma.users.findUnique({ where: { id } });
 
-    if(!user){
+    if (!user) {
       throw new BadRequestException('User not found');
     }
 
@@ -65,7 +65,6 @@ export class UserService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-
     id = validId(id);
     await this.findOne(id);
     if (updateUserDto.password) {

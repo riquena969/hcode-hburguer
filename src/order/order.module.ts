@@ -10,6 +10,12 @@ import { ItemModule } from 'src/item/item.module';
 @Module({
   controllers: [OrderController],
   providers: [OrderService],
-  imports: [PrismaModule, BreadModule, ItemModule, ProductModule, ProductItemModule],
+  imports: [
+    PrismaModule,
+    BreadModule,
+    ItemModule,
+    ProductModule,
+    ProductItemModule,
+  ],
 })
-export class OrderModule { }
+export class OrderModule {}

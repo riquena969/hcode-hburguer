@@ -6,8 +6,10 @@ import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
 export class ProductService {
-
-  constructor(private prismaService: PrismaService, private breadService: BreadService) { }
+  constructor(
+    private prismaService: PrismaService,
+    private breadService: BreadService,
+  ) {}
 
   create(createProductDto: CreateProductDto) {
     const idBead = Number(createProductDto.order_id);
@@ -17,8 +19,8 @@ export class ProductService {
         value: Number(createProductDto.value),
         order_id: Number(createProductDto.order_id),
         bread_id: Number(createProductDto.bread_id),
-      }
-    })
+      },
+    });
   }
 
   findAll() {
@@ -26,7 +28,9 @@ export class ProductService {
   }
 
   async findOne(id: number) {
-    const item = await this.prismaService.products.findUnique({ where: { id } });
+    const item = await this.prismaService.products.findUnique({
+      where: { id },
+    });
 
     if (item === null) {
       throw new BadRequestException('Product not found');
