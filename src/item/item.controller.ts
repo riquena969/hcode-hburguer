@@ -12,7 +12,10 @@ import { ItemService } from './item.service';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 import { AdminGuard } from 'src/auth/admin.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('item')
+@ApiBearerAuth()
 @Controller('item')
 export class ItemController {
   constructor(private readonly itemService: ItemService) {}

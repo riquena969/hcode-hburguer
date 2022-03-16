@@ -8,11 +8,14 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from 'src/auth/admin.guard';
 import { BreadService } from './bread.service';
 import { CreateBreadDto } from './dto/create-bread.dto';
 import { UpdateBreadDto } from './dto/update-bread.dto';
 
+@ApiTags('bread')
+@ApiBearerAuth()
 @Controller('bread')
 export class BreadController {
   constructor(private readonly breadService: BreadService) {}
