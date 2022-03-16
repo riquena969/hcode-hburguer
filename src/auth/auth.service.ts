@@ -29,6 +29,16 @@ export class AuthService {
     };
   }
 
+  async decodeToken(token: string) {
+    try {
+      await this.jwtService.verify(token);
+    } catch (e) {
+      throw new UnauthorizedException(e.message);
+    }
+
+    return this.jwtService.decode(token);
+  }
+
   async getToken(userId: number) {
     const { id, name, email, user_type } = await this.userService.findOne(
       userId,

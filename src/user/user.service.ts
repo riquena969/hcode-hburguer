@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -8,6 +12,30 @@ import { validId } from 'functions/validId';
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
+
+  async get(id: number, hash = false) {
+    id = Number(id);
+
+    if (isNaN(id)) {
+      throw new BadRequestException('ID is required');
+    }
+
+    const user = await this.prisma.users.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!hash) {
+      delete user.password;
+    }
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user;
+  }
 
   async create(createUserDto: CreateUserDto) {
     createUserDto.password = bcrypt.hashSync(createUserDto.password, 10);

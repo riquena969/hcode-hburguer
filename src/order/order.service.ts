@@ -19,10 +19,10 @@ export class OrderService {
     private productItemService: ProductItemService,
   ) {}
 
-  async create(createOrderDto: CreateOrderDto) {
+  async create(userId: string, createOrderDto: CreateOrderDto) {
     const order = await this.prismaService.orders.create({
       data: {
-        user_id: 2,
+        user_id: parseInt(userId),
         value: 0,
       },
     });
